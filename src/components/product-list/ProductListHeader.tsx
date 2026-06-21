@@ -12,6 +12,7 @@ export default function ProductListHeader({
         className="rounded-lg border px-4 py-3"
         onChange={(e) => handleSort(e.target.value as SortOption)}
       >
+        <option value="">Default</option>
         <option value="priceAsc">Price Low to High</option>
         <option value="priceDsc">Price High to Low</option>
       </select>

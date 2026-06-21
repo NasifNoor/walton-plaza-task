@@ -16,6 +16,8 @@ interface CartContextType {
   isCartOpen: boolean;
 
   addItem: (item: CartItem) => void;
+  updateQuantity: (uid: string, quantity: number) => void;
+  removeItem: (uid: string) => void;
 
   openCart: () => void;
   closeCart: () => void;
@@ -54,6 +56,23 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
+  const updateQuantity = (uid: string, quantity: number) => {
+    setItems((prev) =>
+      prev.map((item) =>
+        item.uid === uid
+          ? {
+              ...item,
+              quantity,
+            }
+          : item,
+      ),
+    );
+  };
+
+  const removeItem = (uid: string) => {
+    setItems((prev) => prev.filter((item) => item.uid !== uid));
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -63,6 +82,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         isCartOpen,
 
         addItem,
+        updateQuantity,
+        removeItem,
 
         openCart,
         closeCart,

@@ -24,10 +24,11 @@ export default function ProductList({ products }: ProductListProps) {
   useEffect(() => {
     setProductList(products);
   }, [products]);
+
   const getPrice = (product: Product) => product.variants?.[0]?.mrpPrice ?? 0;
 
   const handleSort = (sortBy: SortOption) => {
-    const sorted = [...paginatedProducts];
+    const sorted = [...productList];
 
     switch (sortBy) {
       case "priceAsc":
@@ -38,8 +39,9 @@ export default function ProductList({ products }: ProductListProps) {
         sorted.sort((a, b) => getPrice(b) - getPrice(a));
         break;
     }
-
-    setProductList(sorted);
+    if (!sortBy) {
+      setProductList(products);
+    } else setProductList(sorted);
 
     setCurrentPage(1);
   };
@@ -47,6 +49,8 @@ export default function ProductList({ products }: ProductListProps) {
   return (
     <section>
       <div className="mb-5 flex items-center justify-between">
+        Showing {startIndex + 1} - {Math.min(endIndex, productList.length)} of{" "}
+        {productList.length} products
         <ProductListHeader handleSort={handleSort} />
       </div>
 

@@ -3,7 +3,8 @@
 import { useCart } from "@/features/cart/CartContext";
 
 export default function CartDrawer() {
-  const { items, isCartOpen, closeCart } = useCart();
+  const { items, isCartOpen, closeCart, removeItem, updateQuantity } =
+    useCart();
 
   const total = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -44,9 +45,33 @@ export default function CartDrawer() {
                     <h3 className="font-medium">Name: {item.name}</h3>
 
                     <p>Unit Price: ৳{item.price}</p>
-
-                    <p>Qty: {item.quantity}</p>
+                    <div className="d-flex">
+                      <span>Quantity: {item.quantity}</span>
+                      <button
+                        className="h-8 mx-3 cursor-pointer w-10 rounded border disabled:bg-gray-300"
+                        onClick={() =>
+                          updateQuantity(item.uid, item.quantity - 1)
+                        }
+                        disabled={item.quantity === 1}
+                      >
+                        -
+                      </button>
+                      <button
+                        className="h-8 w-10 cursor-pointer rounded border disabled:bg-gray-300"
+                        onClick={() =>
+                          updateQuantity(item.uid, item.quantity + 1)
+                        }
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
+                  <button
+                    onClick={() => removeItem(item.uid)}
+                    className="text-red-700 font-bold text-2xl  cursor-pointer"
+                  >
+                    🗑
+                  </button>
                 </div>
               ))
             )}

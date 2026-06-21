@@ -5,6 +5,8 @@ import BasicDetails from "@/components/product/BasicDetails";
 import Image from "next/image";
 import ProductDetailsImage from "@/components/product/ProductDetailsImage";
 import ProductDetails from "@/components/product/ProductDetails";
+import { Suspense } from "react";
+import ProductDetailsPageSkeleton from "@/components/product/ProductDetailsPageSkeleton";
 interface PageProps {
   params: Promise<{
     uid: string;
@@ -34,18 +36,20 @@ export default async function ProductDetailsPage({ params }: PageProps) {
       }));
 
   return (
-    <main className="container mx-auto px-4 py-8">
-      <div className="grid gap-10 lg:grid-cols-2">
-        <ProductDetailsImage
-          productImages={
-            product?.images || [{ url: "/placeholder-product.jpg" }]
-          }
-          alt={product?.enName}
-        />
+    <Suspense fallback={<ProductDetailsPageSkeleton />}>
+      <main className="container mx-auto px-4 py-8">
+        <div className="grid gap-10 lg:grid-cols-2">
+          <ProductDetailsImage
+            productImages={
+              product?.images || [{ url: "/placeholder-product.jpg" }]
+            }
+            alt={product?.enName}
+          />
 
-        {product && <ProductDetails product={product} />}
-      </div>
-      {formattedAttributes && <BasicDetails data={formattedAttributes} />}
-    </main>
+          {product && <ProductDetails product={product} />}
+        </div>
+        {formattedAttributes && <BasicDetails data={formattedAttributes} />}
+      </main>
+    </Suspense>
   );
 }

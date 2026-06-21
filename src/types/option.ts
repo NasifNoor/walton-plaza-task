@@ -1,1 +1,1 @@
-export type SortOption = "priceAsc" | "priceDsc";
+export type SortOption = "priceAsc" | "priceDsc" | "";

@@ -16,7 +16,7 @@ npm install
 
 add .env.local file and copy the the next line there
 
-NEXT_PUBLIC_GRAPHQL_URL=https://devapi.waltonplaza.com.bd/graphql
+NEXT_PUBLIC_GRAPHQL_URL= graphql end point
 
 run the project server
 

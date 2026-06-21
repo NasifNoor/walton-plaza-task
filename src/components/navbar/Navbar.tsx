@@ -11,15 +11,22 @@ export default function Navbar() {
   return (
     <div
       style={{ display: "flex", justifyContent: "space-between" }}
-      className="mb-4"
+      className="mb-8"
     >
       <Link href={"/products"}>
         {" "}
         <h1 className="text-3xl font-bold cursor-pointer">Walton Products</h1>
       </Link>
-      <div>
-        {cartCount > 0 && (
+      <div className="-mt-5">
+        {cartCount > 0 ? (
           <span className="relative top-3 -right-7 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+            {cartCount}
+          </span>
+        ) : (
+          <span
+            style={{ visibility: "hidden" }}
+            className="relative top-3 -right-7 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white"
+          >
             {cartCount}
           </span>
         )}
