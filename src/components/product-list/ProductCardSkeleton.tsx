@@ -6,11 +6,8 @@ export default function ProductCardSkeleton() {
       <div className="space-y-3 p-4">
         <div className="h-4 w-full animate-pulse rounded bg-gray-200" />
         <div className="h-4 w-3/4 animate-pulse rounded bg-gray-200" />
-
         <div className="h-6 w-28 animate-pulse rounded bg-gray-200" />
-
         <div className="h-4 w-20 animate-pulse rounded bg-gray-200" />
-
         <div className="h-10 w-full animate-pulse rounded-lg bg-gray-200" />
       </div>
     </div>

@@ -1,5 +1,4 @@
 export default function CartSkeleton() {
-  console.log("🚀 ~ CartSkeleton ~ CartSkeleton:", CartSkeleton);
   return (
     <aside className="fixed right-0 top-0 z-50 h-screen w-95 bg-white shadow-xl">
       <div className="flex h-full flex-col">
@@ -24,7 +23,6 @@ export default function CartSkeleton() {
         <div className="border-t p-4">
           <div className="flex justify-between">
             <div className="h-5 w-16 animate-pulse rounded bg-gray-200" />
-
             <div className="h-5 w-24 animate-pulse rounded bg-gray-200" />
           </div>
         </div>

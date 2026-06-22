@@ -2,11 +2,9 @@ import { GET_PRODUCT_DETAILS } from "@/graphql/queries/getProductDetails";
 import { client } from "@/lib/apollo/client";
 import { FormattedAttribute, GetProductsResponse } from "@/types/product";
 import BasicDetails from "@/components/product/BasicDetails";
-import Image from "next/image";
 import ProductDetailsImage from "@/components/product/ProductDetailsImage";
 import ProductDetails from "@/components/product/ProductDetails";
-import { Suspense } from "react";
-import ProductDetailsPageSkeleton from "@/components/product/ProductDetailsPageSkeleton";
+import { notFound } from "next/navigation";
 interface PageProps {
   params: Promise<{
     uid: string;
@@ -25,6 +23,10 @@ export default async function ProductDetailsPage({ params }: PageProps) {
 
   const product = data?.getProducts?.result?.products[0];
 
+  if (!product) {
+    notFound();
+  }
+
   const image = product?.images[0]?.url || "/placeholder-product.jpg";
 
   const formattedAttributes: FormattedAttribute[] | undefined =
@@ -36,20 +38,18 @@ export default async function ProductDetailsPage({ params }: PageProps) {
       }));
 
   return (
-    <Suspense fallback={<ProductDetailsPageSkeleton />}>
-      <main className="container mx-auto px-4 py-8">
-        <div className="grid gap-10 lg:grid-cols-2">
-          <ProductDetailsImage
-            productImages={
-              product?.images || [{ url: "/placeholder-product.jpg" }]
-            }
-            alt={product?.enName}
-          />
+    <main className="container mx-auto px-4 py-8">
+      <div className="grid gap-10 lg:grid-cols-2">
+        <ProductDetailsImage
+          productImages={
+            product?.images || [{ url: "/placeholder-product.jpg" }]
+          }
+          alt={product?.enName}
+        />
 
-          {product && <ProductDetails product={product} />}
-        </div>
-        {formattedAttributes && <BasicDetails data={formattedAttributes} />}
-      </main>
-    </Suspense>
+        {product && <ProductDetails product={product} />}
+      </div>
+      {formattedAttributes && <BasicDetails data={formattedAttributes} />}
+    </main>
   );
 }

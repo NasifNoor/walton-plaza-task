@@ -1,5 +1,7 @@
-import { FormattedAttribute } from "@/types/product";
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 interface ProductDetailsImageProps {
   productImages: {
     url: string;
@@ -11,14 +13,30 @@ export default function ProductDetailsImage({
   alt,
 }: ProductDetailsImageProps) {
   const image = productImages[0]?.url;
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+    setPosition({ x, y });
+  };
   return (
     <div>
-      <div className="relative mb-4 h-112.5 overflow-hidden rounded-xl border">
+      <div
+        onMouseMove={handleMouseMove}
+        className="group relative mb-4 h-112.5 overflow-hidden rounded-xl border border-gray-200"
+      >
         <Image
           src={image}
           alt={alt ?? ""}
           fill
-          className="object-contain p-4"
+          style={{
+            transformOrigin: `${position.x}% ${position.y}%`,
+          }}
+          className="object-contain transition-transform duration-300 group-hover:scale-250 p-4"
         />
       </div>
 
@@ -26,7 +44,7 @@ export default function ProductDetailsImage({
         {productImages.map((image, index) => (
           <button
             key={index}
-            className="relative h-24 w-24 overflow-hidden rounded-lg border"
+            className="relative h-24 w-24 overflow-hidden rounded-lg border border-gray-200"
           >
             <Image
               src={image.url}

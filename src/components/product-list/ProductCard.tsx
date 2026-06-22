@@ -71,7 +71,9 @@ export default function ProductCard({ product }: ProductCardProps) {
         <Image
           src={image}
           alt={product.enName}
-          fill
+          height={500}
+          width={500}
+          loading="lazy"
           className="object-contain p-4 transition-transform duration-300 group-hover:scale-105
           "
         />
@@ -92,13 +94,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         <div>
           <div className="flex items-center gap-2">
-            <span
-              className="
-                text-xl
-                font-bold
-                text-green-600
-              "
-            >
+            <span className="text-xl font-bold text-green-600">
               ৳{sellingPrice?.toLocaleString()}
             </span>
 
@@ -122,13 +118,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         <button
           disabled={stock === 0}
-          className={`w-full rounded-lg px-4 py-2 text-sm font-medium transition-colors
-            ${
-              stock > 0
-                ? "bg-black text-white hover:bg-gray-800"
-                : "cursor-not-allowed bg-gray-200 text-gray-500"
-            }
-          `}
+          className={`w-full rounded-lg px-4 py-2 text-sm font-medium transition-colors ${stock > 0 ? "bg-black text-white hover:bg-gray-800" : "cursor-not-allowed bg-gray-200 text-gray-500"}`}
           onClick={handleAddToCart}
         >
           {stock > 0 ? "Add to Cart" : "Out of Stock"}

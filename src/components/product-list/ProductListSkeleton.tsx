@@ -1,7 +1,6 @@
 import ProductCardSkeleton from "./ProductCardSkeleton";
 
 export default function ProductListSkeleton() {
-  console.log("🚀 ~ ProductListSkeleton ~ ProductListSkeleton:");
   return (
     <section>
       <div className="mb-5 flex items-center justify-between">

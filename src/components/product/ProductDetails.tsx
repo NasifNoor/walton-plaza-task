@@ -1,7 +1,6 @@
 "use client";
 
 import { useCart } from "@/features/cart/CartContext";
-import { client } from "@/lib/apollo/client";
 import { Product } from "@/types/product";
 import { useState } from "react";
 
@@ -72,7 +71,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
 
       <div className="mb-6 flex items-center gap-3">
         <button
-          className="h-10 w-10 rounded border disabled:bg-gray-300"
+          className="h-10 w-10 rounded border border-gray-400 disabled:bg-gray-300"
           disabled={productCount == 1}
           onClick={() => setProductCount((prev) => prev - 1)}
         >
@@ -82,7 +81,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
         <span className="font-medium">{productCount}</span>
 
         <button
-          className="h-10 w-10 rounded border disabled:bg-gray-300"
+          className="h-10 w-10 rounded border border-gray-400 disabled:bg-gray-300"
           disabled={productCount == quantity}
           onClick={() => setProductCount((prev) => prev + 1)}
         >
@@ -99,7 +98,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
         </button>
 
         <button
-          className="rounded-lg border px-6 py-3 disabled:bg-gray-300 cursor-not-allowed"
+          className="rounded-lg border border-gray-400 px-6 py-3 disabled:bg-gray-300 cursor-not-allowed"
           disabled
         >
           Buy Now

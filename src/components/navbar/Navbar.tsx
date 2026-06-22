@@ -14,7 +14,6 @@ export default function Navbar() {
       className="mb-8"
     >
       <Link href={"/products"}>
-        {" "}
         <h1 className="text-3xl font-bold cursor-pointer">Walton Products</h1>
       </Link>
       <div className="-mt-5">
