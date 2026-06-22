@@ -3,7 +3,7 @@
 import { Product } from "@/types/product";
 import ProductCard from "./ProductCard";
 import ProductListHeader from "./ProductListHeader";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { SortOption } from "@/types/option";
 
 interface ProductListProps {
@@ -19,7 +19,10 @@ export default function ProductList({ products }: ProductListProps) {
 
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
-  let paginatedProducts = productList.slice(startIndex, endIndex);
+  let paginatedProducts = useMemo(
+    () => productList.slice(startIndex, endIndex),
+    [productList, startIndex, endIndex],
+  );
   const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE);
 
   useEffect(() => {
@@ -29,25 +32,28 @@ export default function ProductList({ products }: ProductListProps) {
 
   const getPrice = (product: Product) => product.variants?.[0]?.mrpPrice ?? 0;
 
-  const handleSort = (sortBy: SortOption, productListArg?: Product[]) => {
-    setSortBy(sortBy);
-    const sorted = productListArg ? [...productListArg] : [...productList];
+  const handleSort = useCallback(
+    (sortBy: SortOption, productListArg?: Product[]) => {
+      setSortBy(sortBy);
+      const sorted = productListArg ? [...productListArg] : [...productList];
 
-    switch (sortBy) {
-      case "priceAsc":
-        sorted.sort((a, b) => getPrice(a) - getPrice(b));
-        break;
+      switch (sortBy) {
+        case "priceAsc":
+          sorted.sort((a, b) => getPrice(a) - getPrice(b));
+          break;
 
-      case "priceDsc":
-        sorted.sort((a, b) => getPrice(b) - getPrice(a));
-        break;
-    }
-    if (!sortBy) {
-      setProductList(products);
-    } else setProductList(sorted);
+        case "priceDsc":
+          sorted.sort((a, b) => getPrice(b) - getPrice(a));
+          break;
+      }
+      if (!sortBy) {
+        setProductList(products);
+      } else setProductList(sorted);
 
-    setCurrentPage(1);
-  };
+      setCurrentPage(1);
+    },
+    [productList, products, getPrice],
+  );
 
   return (
     <section>

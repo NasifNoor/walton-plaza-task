@@ -7,7 +7,6 @@ import Link from "next/link";
 export default function Navbar() {
   const { openCart, items, cartCount } = useCart();
 
-  <button onClick={openCart}>Cart</button>;
   return (
     <div
       style={{ display: "flex", justifyContent: "space-between" }}

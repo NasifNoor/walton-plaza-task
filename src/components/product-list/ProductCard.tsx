@@ -4,6 +4,7 @@ import { useCart } from "@/features/cart/CartContext";
 import { Product } from "@/types/product";
 import Image from "next/image";
 import Link from "next/link";
+import { useCallback } from "react";
 
 interface Discount {
   amount: number;
@@ -50,17 +51,20 @@ export default function ProductCard({ product }: ProductCardProps) {
         : mrpPrice;
   const stock = variant?.quantity ?? 0;
 
-  const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleAddToCart = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
 
-    addItem({
-      uid: product?.uid,
-      name: product?.enName,
-      price: sellingPrice,
-      quantity: 1,
-    });
-  };
+      addItem({
+        uid: product?.uid,
+        name: product?.enName,
+        price: sellingPrice,
+        quantity: 1,
+      });
+    },
+    [addItem, product.uid, product.enName, sellingPrice],
+  );
 
   return (
     <Link

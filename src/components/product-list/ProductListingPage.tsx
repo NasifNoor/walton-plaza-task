@@ -1,7 +1,7 @@
 "use client";
 
 import { Product } from "@/types/product";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import ProductList from "./ProductList";
 import SideBar from "./SideBar";
 import { StockFilter } from "@/types/option";
@@ -20,10 +20,10 @@ export default function ProductListingPage({ products }: ProductListProps) {
 
         switch (stockFilter) {
           case "inStock":
-            return stock >= 0;
+            return stock > 0;
 
           case "outOfStock":
-            return stock < 0;
+            return stock <= 0;
 
           default:
             return true;
@@ -51,15 +51,15 @@ export default function ProductListingPage({ products }: ProductListProps) {
       });
   }, [products, stockFilter, minPrice, maxPrice]);
 
-  const handleStockFilter = (value: StockFilter) => {
+  const handleStockFilter = useCallback((value: StockFilter) => {
     setStockFilter(value);
-  };
+  }, []);
 
-  const handleClearFilter = () => {
+  const handleClearFilter = useCallback(() => {
     setStockFilter("");
     setMinPrice(null);
     setMaxPrice(null);
-  };
+  }, []);
 
   return (
     <div className="grid gap-8 lg:grid-cols-[280px_1fr]">

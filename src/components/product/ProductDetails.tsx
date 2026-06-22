@@ -2,7 +2,7 @@
 
 import { useCart } from "@/features/cart/CartContext";
 import { Product } from "@/types/product";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 interface ProductDetailsProps {
   product: Product;
@@ -28,7 +28,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
         ? mrpPrice - (mrpPrice * discountAmount) / 100
         : mrpPrice;
 
-  const handleAddToCart = () => {
+  const handleAddToCart = useCallback(() => {
     addItem({
       uid: product?.uid,
       name: product?.enName,
@@ -36,7 +36,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
       quantity: productCount,
     });
     setProductCount(1);
-  };
+  }, [addItem, product.uid, product.enName, sellingPrice, productCount]);
 
   return (
     <div>

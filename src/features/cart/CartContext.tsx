@@ -31,10 +31,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
-    const storedCart = localStorage.getItem("cart");
+    if (typeof window === "undefined") {
+      return;
+    }
+    try {
+      const storedCart = localStorage.getItem("cart");
 
-    if (storedCart) {
-      setItems(JSON.parse(storedCart));
+      if (storedCart) {
+        setItems(JSON.parse(storedCart));
+      }
+    } catch (error) {
+      console.error("Failed to restore cart", error);
     }
   }, []);
 
